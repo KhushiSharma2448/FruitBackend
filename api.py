@@ -32,7 +32,7 @@ def translate_text():
     # Perform translation
     try:
         result = translate_client.translate(text, target_language=target_language)
-        return jsonify({"translated_text": result['translatedText']})
+        return jsonify({"translated_text": result['translatedText']}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
