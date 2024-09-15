@@ -59,6 +59,10 @@ def delete_faq(faq_id):
     faqs = [faq for faq in faqs if faq["id"] != faq_id]
     return jsonify({"message": "FAQ deleted"}), 200
 
+# Root route
+@app.route('/')
+def home():
+    return "Welcome to the Fruit API!"
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-
