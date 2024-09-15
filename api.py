@@ -20,7 +20,7 @@ CORS(app, resources={r"/api/*": {
 # Initialize Google Translate client
 translate_client = translate.Client()
 
-@app.route('api/translate', methods=['POST', 'OPTIONS'])
+@app.route('api/translate')
 def translate_text():
     if request.method == 'OPTIONS':
         # Preflight request
