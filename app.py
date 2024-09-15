@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Allow Cross-Origin requests
+CORS(app, origins=["http://localhost:3000", "https://fruit-front-end.vercel.app"])
 
 # In-memory storage for FAQs (for demonstration purposes)
 faqs = [
