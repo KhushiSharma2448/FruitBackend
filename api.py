@@ -11,7 +11,7 @@ def after_request(response):
     return response
 
 CORS(app, resources={r"/api/*": {
-    "origins": "https://fruit-front-end.vercel.app/",  # Your frontend URL
+    "origins": "https://fruit-front-end.vercel.app",  # Your frontend URL
     "methods": ["GET", "POST", "PUT", "DELETE"],  # Allow these methods
     "headers": ["Content-Type", "Authorization"],  # Allow these headers
 }})
