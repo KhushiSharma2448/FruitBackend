@@ -3,7 +3,8 @@ from flask_cors import CORS
 from google.cloud import translate_v2 as translate
 
 app = Flask(__name__)
-CORS(app)  # Allow Cross-Origin requests
+CORS(app, origins=["http://localhost:3000", "https://fruit-front-end.vercel.app"])
+
 
 # Initialize Google Translate client
 translate_client = translate.Client()
