@@ -10,7 +10,7 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     return response
 
-CORS(app, resources={r"/*": {
+CORS(app, resources={r"/api/*": {
     "origins": "https://fruit-front-end.vercel.app/",  # Your frontend URL
     "methods": ["GET", "POST", "PUT", "DELETE"],  # Allow these methods
     "headers": ["Content-Type", "Authorization"],  # Allow these headers
