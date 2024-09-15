@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["https://fruit-front-end.vercel.app"]}})
+CORS(app, origins=["https://fruit-front-end.vercel.app"])
+
 
 # In-memory storage for FAQs (for demonstration purposes)
 faqs = [
