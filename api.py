@@ -22,6 +22,9 @@ translate_client = translate.Client()
 
 @app.route('api/translate', methods=['POST', 'OPTIONS'])
 def translate_text():
+    if request.method == 'OPTIONS':
+        # Preflight request
+        return jsonify({"message": "CORS preflight response"}), 200
     data = request.get_json()
     text = data.get('text')
     target_language = data.get('target_language')
