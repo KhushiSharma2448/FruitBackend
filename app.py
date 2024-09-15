@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {
-    "origins": "https://fruit-front-end.vercel.app",  # Your frontend URL
+    "origins": "https://fruit-front-end.vercel.app/",  # Your frontend URL
     "methods": ["GET", "POST", "PUT", "DELETE"],  # Allow these methods
     "headers": ["Content-Type", "Authorization"],  # Allow these headers
 }})
