@@ -3,7 +3,18 @@ from flask_cors import CORS
 from google.cloud import translate_v2 as translate
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000", "https://fruit-front-end.vercel.app"])
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', 'https://fruit-front-end.vercel.app')
+    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    return response
+
+CORS(app, resources={r"/*": {
+    "origins": "https://fruit-front-end.vercel.app/",  # Your frontend URL
+    "methods": ["GET", "POST", "PUT", "DELETE"],  # Allow these methods
+    "headers": ["Content-Type", "Authorization"],  # Allow these headers
+}})
 
 
 # Initialize Google Translate client
