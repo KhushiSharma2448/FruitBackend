@@ -9,7 +9,11 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     return response
-
+CORS(app, resources={r"/api/*": {
+    "origins": "https://fruit-front-end.vercel.app",
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "headers": ["Content-Type", "Authorization"]
+}})
 # In-memory storage for FAQs (for demonstration purposes)
 faqs = [
     {"id": 1, "question": "What is Fruit.ai?", "answer": "Fruit.ai is an AI-powered platform for managing your health by providing personalized insights about fruits, their benefits, and more."},
