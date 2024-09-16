@@ -55,7 +55,7 @@ def get_faq(faq_id):
         return jsonify({"error": "FAQ not found"}), 404
 
 # Update an existing FAQ
-@app.route('/api/faqs/<int:faq_id>', methods=['PUT'])
+@app.route('/api/faqs/<int:faq_id>', methods=['PUT','OPTIONS'])
 def update_faq(faq_id):
     data = request.get_json()
     faq = find_faq_by_id(faq_id)
