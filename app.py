@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from google.cloud import translate_v2 as translate
 
 app = Flask(__name__)
 @app.after_request
