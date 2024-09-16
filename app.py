@@ -3,8 +3,14 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 @app.after_request
-def add_header(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
+def after_request(response):
+    # Add CORS headers to all responses
+    response.headers['Access-Control-Allow-Origin'] = '*'  # Allow all origins
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'  # Allow specified methods
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'  # Allow specified headers
+    # Handle preflight requests (OPTIONS requests)
+    if request.method == 'OPTIONS':
+        response.headers['Access-Control-Max-Age'] = '3600'  # Cache preflight response for 1 hour
     return response
 CORS(app, resources={r"/api/*": {
     "origins": "https://fruit-front-end.vercel.app",
