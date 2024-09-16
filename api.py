@@ -8,7 +8,9 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', 'https://fruit-front-end.vercel.app')
     response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')  # Add this if credentials are needed
     return response
+
 
 CORS(app, resources={r"/api/*": {
     "origins": "https://fruit-front-end.vercel.app",  # Your frontend URL
@@ -20,11 +22,14 @@ CORS(app, resources={r"/api/*": {
 # Initialize Google Translate client
 translate_client = translate.Client()
 
-@app.route('api/translate')
+@app.route('/api/translate', methods=['POST', 'OPTIONS'])
 def translate_text():
     if request.method == 'OPTIONS':
         # Preflight request
-        return jsonify({"message": "CORS preflight response"}), 200
+        response = jsonify({"message": "CORS preflight response"})
+        response.status_code = 200
+        return response
+    
     data = request.get_json()
     text = data.get('text')
     target_language = data.get('target_language')
@@ -38,6 +43,7 @@ def translate_text():
         return jsonify({"translated_text": result['translatedText']}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
