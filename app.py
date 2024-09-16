@@ -1,24 +1,14 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
 
-# Manually handle CORS headers
-@app.after_request
-def after_request(response):
-    # Allow CORS requests from your frontend domain
-    response.headers['Access-Control-Allow-Origin'] = 'https://fruit-front-end.vercel.app'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-    return response
-
-# Handle preflight (OPTIONS) requests globally
-@app.route('/api/<path:path>', methods=['OPTIONS'])
-def options(path):
-    response = jsonify({})
-    response.headers['Access-Control-Allow-Origin'] = 'https://fruit-front-end.vercel.app'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-    return response
+# Configure CORS
+CORS(app, resources={r"/api/*": {
+    "origins": "https://fruit-front-end.vercel.app",
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "headers": ["Content-Type", "Authorization"]
+}})
 
 # In-memory storage for FAQs (for demonstration purposes)
 faqs = [
@@ -57,7 +47,7 @@ def get_faq(faq_id):
         return jsonify({"error": "FAQ not found"}), 404
 
 # Update an existing FAQ
-@app.route('/api/faqs/<int:faq_id>', methods=['PUT','OPTIONS'])
+@app.route('/api/faqs/<int:faq_id>', methods=['PUT'])
 def update_faq(faq_id):
     data = request.get_json()
     faq = find_faq_by_id(faq_id)
