@@ -2,7 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-
+@app.after_request
+def add_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 CORS(app, resources={r"/api/*": {
     "origins": "https://fruit-front-end.vercel.app",
     "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
