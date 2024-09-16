@@ -1,23 +1,16 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-
 app = Flask(__name__)
-@app.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', 'https://fruit-front-end.vercel.app')
-    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    return response
 
-
-CORS(app, resources={r"/api/*": {
-    "origins": "https://fruit-front-end.vercel.app"  # Your frontend URL
-    "methods": ["GET", "POST", "PUT", "DELETE","OPTIONS"],  # Allow these methods
-    "headers": ["Content-Type", "Authorization"],  # Allow these headers
-}})
-
-
+# Using Flask-CORS to handle CORS policies
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "https://fruit-front-end.vercel.app",  # Your frontend URL
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # Allow these methods
+        "allow_headers": ["Content-Type", "Authorization"]  # Allow these headers
+    }
+})
 
 # In-memory storage for FAQs (for demonstration purposes)
 faqs = [
@@ -45,8 +38,6 @@ def create_faq():
 @app.route('/api/faqs', methods=['GET'])
 def get_faqs():
     return jsonify(faqs)
-
-
 
 # Get a specific FAQ
 @app.route('/api/faqs/<int:faq_id>', methods=['GET'])
