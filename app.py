@@ -2,10 +2,19 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Fallback: Manually handling CORS headers without using Flask-CORS
+# Manually handle CORS headers
 @app.after_request
 def after_request(response):
-    # Set CORS headers manually
+    # Allow CORS requests from your frontend domain
+    response.headers['Access-Control-Allow-Origin'] = 'https://fruit-front-end.vercel.app'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
+
+# Handle preflight (OPTIONS) requests globally
+@app.route('/api/<path:path>', methods=['OPTIONS'])
+def options(path):
+    response = jsonify({})
     response.headers['Access-Control-Allow-Origin'] = 'https://fruit-front-end.vercel.app'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
